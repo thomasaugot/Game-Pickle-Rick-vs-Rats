@@ -138,6 +138,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
+  transition: 100ms;
 }
 
 .rats {
@@ -145,6 +146,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
+  transition: all .5s;
 }
 
 .bullet {
@@ -152,4 +154,15 @@ body {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
+
+}
+
+#scoreBar {
+  background-image: url('../images/scoreBackground.png');
+  position: absolute;
+  background-size: contain;
+  background-repeat: no-repeat;
+  color: black;
+  font-size: 22px;
+  font-weight: bold;
 }

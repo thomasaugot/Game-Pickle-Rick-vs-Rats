@@ -16,7 +16,7 @@ document.addEventListener("keydown", (e) => {
 
 // launching the game
 
-const startButton = document.getElementById("start-button");
+const startButton = document.getElementById("start-button")
 startButton.addEventListener("click", (e) => {
   startGame();
 });
@@ -24,6 +24,7 @@ startButton.addEventListener("click", (e) => {
 function startGame() {
   const instructionsPage = document.getElementById("landing-page");
   instructionsPage.remove();
+  displayScoreBar();
   createRick();
   createRat();
   intervalLevelOne();
@@ -35,8 +36,8 @@ const rickDomElement = document.createElement("div");
 
 const rick = {
   positionX: 0,
-  width: 9,
   positionY: 47,
+  width: 9,
   height: 19,
   speedY: 6,
 };
@@ -53,17 +54,17 @@ function createRick() {
 
 // creating rats
 
-let ratsArray = [];
+const ratsArray = [];
 
 function createRat() {
   const ratDomElement = document.createElement("div");
   ratDomElement.className = "rats";
 
   const rat = {
-    height: 16,
-    width: 12,
+    height: 10,
+    width: 8,
     positionX: 100,
-    positionY: Math.floor(Math.random() * 90),
+    positionY: Math.floor(Math.random() * 80),
     speedX: 2,
     domElement: ratDomElement,
   };
@@ -90,7 +91,7 @@ function removeRats(ratInstance) {
   if (ratInstance.positionX <= 0 - ratInstance.width) {
     ratInstance.domElement.remove();
     ratsArray.shift();
-    // removeLife();
+    return true;
   }
 }
 
@@ -100,11 +101,13 @@ function intervalLevelOne() {
   setInterval(() => {
     createRat();
   }, 700);
+
   setInterval(() => {
     ratsArray.forEach((ratObject) => {
       moveRats(ratObject);
       removeRats(ratObject);
       detectRatCollision(ratObject);
+      removeLife(ratObject);
     });
   }, 200);
 }
@@ -118,20 +121,12 @@ function detectRatCollision(ratInstance) {
   ) {
     location.href = "../game-over.html";
   }
-} 
+}
 
-// function gameOverRestart() {
-//   const restartButton = document.getElementById("try-again-button");
-//   restartButton.addEventListener("click", (e) => {
-//     location.href ="../index.html"
-//   });
-// }
-
-//adding shoot functionnality to my player
-
-let bulletsArray = [];
+const bulletsArray = [];
 
 function shoot() {
+
   // creating my bullets
 
   const bulletDomElement = document.createElement("div");
@@ -140,7 +135,7 @@ function shoot() {
   const bullet = {
     height: 10,
     width: 8,
-    speedX: 15,
+    speedX: 10,
     positionY: rick.positionY + rick.width / 2,
     positionX: rick.positionX + rick.width / 2 + 3, //+3 so the bullet doesn't start in the middle of my player
     domElement: bulletDomElement,
@@ -154,8 +149,6 @@ function shoot() {
   const parentElm = document.getElementById("board");
   parentElm.appendChild(bulletDomElement);
 
-  // move the bullets
-
   bulletsArray.push(bullet);
   // the function shoot() is called within the event listeners ' '
 }
@@ -163,7 +156,6 @@ function shoot() {
 // removing bullets out of screen
 
 function removeBullets(bulletInstance) {
- 
   if (bulletInstance.positionX >= 100 - bulletInstance.width) {
     bulletInstance.domElement.remove();
     bulletsArray.shift();
@@ -177,7 +169,8 @@ setInterval(() => {
     removeBullets(bulletObject);
     ratsArray.forEach((ratObject, ratIndex) => {
       detectBulletCollision(bulletObject, ratObject, bulletIndex, ratIndex);
-    })
+      addLife(bulletObject, ratObject, bulletIndex, ratIndex);
+    });
   });
 }, 100);
 
@@ -185,8 +178,8 @@ setInterval(() => {
 
 function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratIndex) {
   if (
-    ratInstance.positionX < bulletInstance.positionX + bulletInstance.width &&
-    ratInstance.positionX + ratInstance.width > bulletInstance.positionX &&
+    ratInstance.positionX * 1.2 < bulletInstance.positionX + bulletInstance.width &&
+    ratInstance.positionX * 1.2 + ratInstance.width > bulletInstance.positionX &&
     ratInstance.positionY < bulletInstance.positionY + bulletInstance.height &&
     ratInstance.height + ratInstance.positionY > bulletInstance.positionY
   ) {
@@ -194,19 +187,42 @@ function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratInde
     bulletsArray.splice(bulletIndex, 1);
     ratsArray.splice(ratIndex, 1);
     ratInstance.domElement.remove();
+    return true;
   }
 }
 
 // calculate score
 
-let lives = [];
+let livesArray = [];
+let lives = 1;
 
-// function addLife() {
+function displayScoreBar() {
+  const scoreBar = document.createElement("div");
+  scoreBar.id = "scoreBar";
+  scoreBar.style.height = 25 + "vh";
+  scoreBar.style.width = 25 + "vw";
+  scoreBar.style.bottom = 70 + "vh";
+  scoreBar.style.left = 85 + "vw";
+  const parentElement = document.getElementById("board");
+  parentElement.appendChild(scoreBar);
+}
 
-// }
+function addLife(bulletInstance, ratInstance, bulletIndex, ratIndex) {
+  if (detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratIndex)){
+    lives++;
+    // livesArray.push(lives);
+    return lives
+  }
+  document.getElementById('scoreBar').innerHTML = 'Score: ' + lives;
+}
 
-// function removeLife() {
-
-// }
-
-// game over & reset
+function removeLife(ratObject){
+  if(removeRats(ratObject)){ 
+    lives--;
+    // livesArray.shift(lives);
+    return lives
+  } else if( lives <= 0) {
+    location.href = "../game-over.html";
+  }
+  document.getElementById('scoreBar').innerHTML = lives;
+}
