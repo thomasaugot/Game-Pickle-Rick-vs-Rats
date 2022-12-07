@@ -1,0 +1,23 @@
+[x]- Create folder and files in VS code
+[x]- Create repo
+
+*** MILESTONE 1: Get the basic done ***
+[x]- Create the board
+[x]- Create the HTML main page with instructions and game title 
+  (over the weekend so I can focus on JS later)
+[x]- Get the starting page, the instructions and Game Over page ready
+
+
+***MILESTONE 2: Get the JS completed***
+[x]- Have a functionning player that moves up and down and shoots
+[x]- Have enemies randomly appearing from right to left
+[]- Have a life counter on the top right (one pickle gained per rat killed, one lost per rat missed)
+[x]- Have the player replaced by rick image
+[x]- Have enemies replaced by rats image
+[x]- Get shots as lazers/fire bullets
+
+
+***BONUS***
+[]- add a pause/resume function
+[]- add a start counter 3, 2, 1 at the start
+[]- Have several levels of speed
