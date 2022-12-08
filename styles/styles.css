@@ -118,7 +118,7 @@ body {
 #game-over-img {
   opacity: 0.9;
   width: auto;
-  height: 420px;
+  height: 400px;
   position: absolute;
   overflow: hidden;
 }
@@ -162,7 +162,7 @@ body {
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
-  color: black;
-  font-size: 22px;
   font-weight: bold;
+  /* text-shadow: 8px 2px black; */
+  -webkit-text-stroke: 1px black;
 }

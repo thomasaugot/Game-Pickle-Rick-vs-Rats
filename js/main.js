@@ -1,4 +1,5 @@
 let board = document.getElementById("board");
+let lives = 1;
 
 // adding event listeners
 
@@ -28,6 +29,7 @@ function startGame() {
   createRick();
   createRat();
   intervalLevelOne();
+  printScore()
 }
 
 //creating my player
@@ -91,6 +93,11 @@ function removeRats(ratInstance) {
   if (ratInstance.positionX <= 0 - ratInstance.width) {
     ratInstance.domElement.remove();
     ratsArray.shift();
+    lives--;
+    printScore()
+    if(lives <=0){
+      location.href = "./game-over.html";
+    }
     return true;
   }
 }
@@ -100,14 +107,14 @@ function removeRats(ratInstance) {
 function intervalLevelOne() {
   setInterval(() => {
     createRat();
-  }, 700);
+  }, 600);
 
   setInterval(() => {
+    printScore()
     ratsArray.forEach((ratObject) => {
       moveRats(ratObject);
       removeRats(ratObject);
       detectRatCollision(ratObject);
-      removeLife(ratObject);
     });
   }, 200);
 }
@@ -119,7 +126,7 @@ function detectRatCollision(ratInstance) {
     rick.positionY < ratInstance.positionY + ratInstance.height &&
     rick.height + rick.positionY > ratInstance.positionY
   ) {
-    location.href = "../game-over.html";
+    location.href = "./game-over.html";
   }
 }
 
@@ -169,7 +176,6 @@ setInterval(() => {
     removeBullets(bulletObject);
     ratsArray.forEach((ratObject, ratIndex) => {
       detectBulletCollision(bulletObject, ratObject, bulletIndex, ratIndex);
-      addLife(bulletObject, ratObject, bulletIndex, ratIndex);
     });
   });
 }, 100);
@@ -187,42 +193,59 @@ function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratInde
     bulletsArray.splice(bulletIndex, 1);
     ratsArray.splice(ratIndex, 1);
     ratInstance.domElement.remove();
+    lives++;
+    printScore()
     return true;
+    
   }
 }
 
 // calculate score
-
-let livesArray = [];
-let lives = 1;
 
 function displayScoreBar() {
   const scoreBar = document.createElement("div");
   scoreBar.id = "scoreBar";
   scoreBar.style.height = 25 + "vh";
   scoreBar.style.width = 25 + "vw";
-  scoreBar.style.bottom = 70 + "vh";
+  scoreBar.style.bottom = 71 + "vh";
   scoreBar.style.left = 85 + "vw";
+  scoreBar.style.color = 'white';
+  scoreBar.style.fontSize = 30 + 'px';
+  scoreBar.style.position = 'absolute';
   const parentElement = document.getElementById("board");
   parentElement.appendChild(scoreBar);
 }
 
-function addLife(bulletInstance, ratInstance, bulletIndex, ratIndex) {
-  if (detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratIndex)){
-    lives++;
-    // livesArray.push(lives);
-    return lives
-  }
-  document.getElementById('scoreBar').innerHTML = 'Score: ' + lives;
+function printScore(){ 
+  const score = 
+  `
+    <div style='position: absolute; left: 20px';>
+      <p>Score</p>
+      <p>${lives}</p>
+    </div>
+  `;
+  document.getElementById('scoreBar').innerHTML = score
 }
 
-function removeLife(ratObject){
-  if(removeRats(ratObject)){ 
-    lives--;
-    // livesArray.shift(lives);
-    return lives
-  } else if( lives <= 0) {
-    location.href = "../game-over.html";
-  }
-  document.getElementById('scoreBar').innerHTML = lives;
-}
+// create levels
+
+// function intervalLevelTwo() {
+//   setInterval(() => {
+//     createRat();
+//   }, 100);
+
+//   setInterval(() => {
+//     ratsArray.forEach((ratObject) => {
+//       moveRats(ratObject);
+//       removeRats(ratObject);
+//       detectRatCollision(ratObject);
+//       removeLife(ratObject);
+//     });
+//   }, 200);
+// }
+
+// function increaseSpeed(){
+//   setTimeout(() => {
+//     intervalLevelTwo();
+//     }, 10000); //run this after 30 seconds.
+// }
