@@ -17,7 +17,7 @@ document.addEventListener("keydown", (e) => {
 
 // launching the game
 
-const startButton = document.getElementById("start-button")
+const startButton = document.getElementById("start-button");
 startButton.addEventListener("click", (e) => {
   startGame();
 });
@@ -29,7 +29,7 @@ function startGame() {
   createRick();
   createRat();
   intervalLevelOne();
-  printScore()
+  printScore();
 }
 
 //creating my player
@@ -94,8 +94,8 @@ function removeRats(ratInstance) {
     ratInstance.domElement.remove();
     ratsArray.shift();
     lives--;
-    printScore()
-    if(lives <=0){
+    printScore();
+    if (lives <= 0) {
       location.href = "./game-over.html";
     }
     return true;
@@ -110,7 +110,7 @@ function intervalLevelOne() {
   }, 600);
 
   setInterval(() => {
-    printScore()
+    printScore();
     ratsArray.forEach((ratObject) => {
       moveRats(ratObject);
       removeRats(ratObject);
@@ -133,7 +133,6 @@ function detectRatCollision(ratInstance) {
 const bulletsArray = [];
 
 function shoot() {
-
   // creating my bullets
 
   const bulletDomElement = document.createElement("div");
@@ -182,10 +181,17 @@ setInterval(() => {
 
 // detecting bullets & rats collision
 
-function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratIndex) {
+function detectBulletCollision(
+  bulletInstance,
+  ratInstance,
+  bulletIndex,
+  ratIndex
+) {
   if (
-    ratInstance.positionX * 1.2 < bulletInstance.positionX + bulletInstance.width &&
-    ratInstance.positionX * 1.2 + ratInstance.width > bulletInstance.positionX &&
+    ratInstance.positionX * 1.2 <
+      bulletInstance.positionX + bulletInstance.width &&
+    ratInstance.positionX * 1.2 + ratInstance.width >
+      bulletInstance.positionX &&
     ratInstance.positionY < bulletInstance.positionY + bulletInstance.height &&
     ratInstance.height + ratInstance.positionY > bulletInstance.positionY
   ) {
@@ -194,9 +200,8 @@ function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratInde
     ratsArray.splice(ratIndex, 1);
     ratInstance.domElement.remove();
     lives++;
-    printScore()
+    printScore();
     return true;
-    
   }
 }
 
@@ -209,43 +214,26 @@ function displayScoreBar() {
   scoreBar.style.width = 25 + "vw";
   scoreBar.style.bottom = 71 + "vh";
   scoreBar.style.left = 85 + "vw";
-  scoreBar.style.color = 'white';
-  scoreBar.style.fontSize = 30 + 'px';
-  scoreBar.style.position = 'absolute';
+  scoreBar.style.color = "white";
+  scoreBar.style.fontSize = 30 + "px";
+  scoreBar.style.position = "absolute";
   const parentElement = document.getElementById("board");
   parentElement.appendChild(scoreBar);
 }
 
-function printScore(){ 
-  const score = 
-  `
+function printScore() {
+  const score = `
     <div style='position: absolute; left: 20px';>
       <p>Score</p>
       <p>${lives}</p>
     </div>
   `;
-  document.getElementById('scoreBar').innerHTML = score
+  document.getElementById("scoreBar").innerHTML = score;
 }
 
-// create levels
+// mute or unmute sound
 
-// function intervalLevelTwo() {
-//   setInterval(() => {
-//     createRat();
-//   }, 100);
-
-//   setInterval(() => {
-//     ratsArray.forEach((ratObject) => {
-//       moveRats(ratObject);
-//       removeRats(ratObject);
-//       detectRatCollision(ratObject);
-//       removeLife(ratObject);
-//     });
-//   }, 200);
-// }
-
-// function increaseSpeed(){
-//   setTimeout(() => {
-//     intervalLevelTwo();
-//     }, 10000); //run this after 30 seconds.
-// }
+function toggleMuted() {
+  let sound = document.getElementById("sound");
+  sound.muted = !sound.muted;
+}

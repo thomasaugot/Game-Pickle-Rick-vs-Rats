@@ -134,7 +134,7 @@ body {
 }
 
 #rick-player {
-  background-image: url('../images/playerIcon.png');
+  background-image: url("../images/playerIcon.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
@@ -142,27 +142,109 @@ body {
 }
 
 .rats {
-  background-image: url('../images/rat.png');
+  background-image: url("../images/rat.png");
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .bullet {
-  background-image: url('../images/blue-laser-beam-png-31626464944145cdjbgcb-removebg-preview.png');
+  background-image: url("../images/blue-laser-beam-png-31626464944145cdjbgcb-removebg-preview.png");
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
-
 }
 
 #scoreBar {
-  background-image: url('../images/scoreBackground.png');
+  background-image: url("../images/scoreBackground.png");
   position: absolute;
   background-size: contain;
   background-repeat: no-repeat;
   font-weight: bold;
-  /* text-shadow: 8px 2px black; */
+  text-shadow: 2px 2px black;
   -webkit-text-stroke: 1px black;
+}
+
+/* all the following lines are related to sound toggle switch styling */
+
+.soundControl {
+  display: flex;
+  justify-content: flex-start;
+  opacity: 0.2;
+  margin-top: 5px; 
+}
+
+.soundControl:hover {
+  opacity: 0.9;
+}
+
+.switch {
+  position: absolute;
+  width: 60px;
+  height: 34px;
+  margin-top: 20px;
+  margin-left: 68px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: solid white 1px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: transparent;
+  border: solid white 1px;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+  border: solid white 1px;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.soundImg {
+  margin-top: 16px;
+  position: absolute;
+  width: auto;
+  height: 40px;
+  margin-left: 20px;
 }
