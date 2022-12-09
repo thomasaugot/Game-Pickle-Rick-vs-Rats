@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shooting Game</title>
+    <title>Pickle Rick vs Rats</title>
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,21 +26,21 @@
     />
   </head>
   <body id="board">
+    <audio id="sound" autoplay="autoplay" loop="loop">
+      <source
+        src="rick-and-morty-soundtrack.mp3"
+        type="audio/mp3"
+      />
+    </audio>
+    <div class="soundControl">
+      <img src="./images/sound.png" class="soundImg" />
+      <label class="switch">
+        <input type="checkbox" onclick="toggleMuted()" />
+        <span class="slider round"></span>
+      </label>
+      <img src="./images/silent-icon.png" class="silentImg" />
+    </div>
     <div id="landing-page">
-      <div class="soundControl">
-        <img src="./images/sound.png" class="soundImg" />
-        <label class="switch">
-          <input type="checkbox" onclick="toggleMuted()" />
-          <span class="slider round"></span>
-        </label>
-        <img src="./images/silent-icon.png" class="silentImg" />
-        <audio id="sound" autoplay="autoplay" loop="loop">
-          <source
-            src="rick-and-morty-soundtrack.mp3"
-            type="audio/mp3"
-          />
-        </audio>
-      </div>
       <p id="title">
         Pickle Rick fell into the sewers and is being<br/>
         attacked by angry rats. Kill them all!

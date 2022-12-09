@@ -1,12 +1,5 @@
 let board = document.getElementById("board");
 let lives = 1;
-const rick = {
-  positionX: 0,
-  positionY: 47,
-  width: 9,
-  height: 19,
-  speedY: 6,
-};
 
 // launching the game
 
@@ -27,6 +20,13 @@ function startGame() {
 
 //creating my player
 
+const rick = {
+  positionX: 0,
+  positionY: 47,
+  width: 9,
+  height: 19,
+  speedY: 6,
+};
 const rickDomElement = document.createElement("div");
 
 function createRick() {
@@ -37,7 +37,7 @@ function createRick() {
   rickDomElement.style.left = rick.positionX + "vw";
   const parentElm = document.getElementById("board");
   parentElm.appendChild(rickDomElement);
-}// function is called at line 22
+} // function is called at line 22
 
 // adding event listeners
 
@@ -55,19 +55,11 @@ document.addEventListener("keydown", (e) => {
 
 // setting intervals
 
-// let time = 0;
-// let currentLevel = 1;
-// let intervalOne = null;
-// let intervalTwo = null;
-
 function initIntervals() {
-  // intervalOne = 
   setInterval(() => {
     createRat();
-    // time++;
-  }, 700);
+  }, 600);
 
-  // intervalTwo = 
   setInterval(() => {
     printScore();
     ratsArray.forEach((ratObject) => {
@@ -76,53 +68,7 @@ function initIntervals() {
       detectRatCollision(ratObject);
     });
   }, 200);
-
-  // if (time >= 10) {
-  //   clearInterval(intervalOne);
-  //   clearInterval(intervalTwo);
-  //   intervalLevelTwo();
-  // } else if (time >= 20) {
-  //   clearInterval(intervalOne);
-  //   clearInterval(intervalTwo);
-  //   intervalLevelThree();
-  // }
 }
-
-// // adding levels
-
-// function intervalLevelTwo() {
-//   console.log("level 2");
-//   intervalOne = setInterval(() => {
-//     createRat();
-//     time++;
-//   }, 600);
-
-//   intervalTwo = setInterval(() => {
-//     printScore();
-//     ratsArray.forEach((ratObject) => {
-//       moveRats(ratObject);
-//       removeRats(ratObject);
-//       detectRatCollision(ratObject);
-//     });
-//   }, 150);
-// }
-
-// function intervalLevelThree() {
-//   console.log("level 3");
-//   intervalOne = setInterval(() => {
-//     createRat();
-//     time++;
-//   }, 500);
-
-//   intervalTwo = setInterval(() => {
-//     printScore();
-//     ratsArray.forEach((ratObject) => {
-//       moveRats(ratObject);
-//       removeRats(ratObject);
-//       detectRatCollision(ratObject);
-//     });
-//   }, 100);
-// }
 
 // creating rats
 
@@ -190,7 +136,6 @@ function detectRatCollision(ratInstance) {
 const bulletsArray = [];
 
 function shoot() {
-  
   // creating my bullets
 
   const bulletDomElement = document.createElement("div");
@@ -294,4 +239,4 @@ function printScore() {
 function toggleMuted() {
   let sound = document.getElementById("sound");
   sound.muted = !sound.muted;
-}
+  }
