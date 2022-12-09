@@ -11,7 +11,7 @@
 ***MILESTONE 2: Get the JS completed***
 [x]- Have a functionning player that moves up and down and shoots
 [x]- Have enemies randomly appearing from right to left
-[]- Have a life counter on the top right (one pickle gained per rat killed, one lost per rat missed)
+[x]- Have a life counter on the top right (one pickle gained per rat killed, one lost per rat missed)
 [x]- Have the player replaced by rick image
 [x]- Have enemies replaced by rats image
 [x]- Get shots as lazers/fire bullets
