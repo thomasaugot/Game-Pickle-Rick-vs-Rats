@@ -16,4 +16,4 @@ The game has 3 keypad commands:
 NB: a sound toggle switch is available on the top-left of the game board.
 
 ## Demo ##
-Try it yourself at (https://thomasaugot.github.io/game-pickle-rick-vs-rats/)
+Try it yourself at (https://pickle-rick-shooting-game.netlify.app)
