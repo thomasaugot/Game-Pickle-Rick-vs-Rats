@@ -1,6 +1,15 @@
 let board = document.getElementById("board");
 let lives = 1;
 
+// Show spinner for 3 seconds before showing landing page
+const loadingDiv = document.getElementById("loading");
+const landingPageDiv = document.getElementById("landing-page");
+
+setTimeout(() => {
+  loadingDiv.style.display = "none";
+  landingPageDiv.style.display = "block";
+}, 3000);
+
 // launching the game
 
 const startButton = document.getElementById("start-button");
