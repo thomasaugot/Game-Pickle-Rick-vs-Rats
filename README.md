@@ -13,6 +13,8 @@ The game has 3 keypad commands:
 - *"Arrow Down"* to move down,
 - *"Space bar"* to shoot.
 
+Levels are incremented every 10 seconds.
+
 NB: a sound toggle switch is available on the top-left of the game board.
 
 ## Demo ##
