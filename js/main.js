@@ -54,6 +54,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 // setting intervals
+let elapsedTime = 0; // variable to keep track of the time elapsed since the game started
+let currentLevel = 1;
+let speedIncrease = 1; // setting the initial speed to one time
 
 function initIntervals() {
   setInterval(() => {
@@ -61,6 +64,23 @@ function initIntervals() {
   }, 600);
 
   setInterval(() => {
+    elapsedTime += 200; // update the elapsed time every 200ms
+    if (elapsedTime % 10000 === 0) {
+      // if 10 seconds have passed
+      ratsArray.forEach((rat) => {
+        rat.speedX += speedIncrease * 1.5; // increase the speed increase factor by 20% after each level
+      });
+      currentLevel++;
+      console.log(`level ${currentLevel}`);
+      let levelMessage = document.createElement("div");
+      levelMessage.id = "level-message";
+      levelMessage.innerHTML = `Level ${currentLevel}`;
+      document.getElementById("board").appendChild(levelMessage);
+
+      setTimeout(() => {
+        levelMessage.innerHTML = "";
+      }, 2000);
+    }
     printScore();
     ratsArray.forEach((ratObject) => {
       moveRats(ratObject);
@@ -101,7 +121,8 @@ function createRat() {
 }
 
 function moveRats(ratInstance) {
-  ratInstance.positionX -= ratInstance.speedX;
+  const currentSpeed = ratInstance.speedX + speedIncrease;
+  ratInstance.positionX -= currentSpeed;
   ratInstance.domElement.style.left = ratInstance.positionX + "vw";
 }
 
@@ -136,6 +157,14 @@ function detectRatCollision(ratInstance) {
 const bulletsArray = [];
 
 function shoot() {
+  // Remove the oldest bullet if the max number of bullets is reached
+  const maxBullets = 10;
+
+  if (bulletsArray.length >= maxBullets) {
+    bulletsArray[0].domElement.remove();
+    bulletsArray.shift();
+  }
+
   // creating my bullets
 
   const bulletDomElement = document.createElement("div");
@@ -164,13 +193,6 @@ function shoot() {
 
 // removing bullets out of screen
 
-function removeBullets(bulletInstance) {
-  if (bulletInstance.positionX >= 100 - bulletInstance.width) {
-    bulletInstance.domElement.remove();
-    bulletsArray.shift();
-  }
-}
-
 setInterval(() => {
   bulletsArray.forEach((bulletObject, bulletIndex) => {
     bulletObject.positionX += bulletObject.speedX;
@@ -180,26 +202,27 @@ setInterval(() => {
       detectBulletCollision(bulletObject, ratObject, bulletIndex, ratIndex);
     });
   });
-}, 100);
+}, 50);
+
+function removeBullets(bulletInstance) {
+  if (bulletInstance.positionX >= 100 - bulletInstance.width) {
+    bulletInstance.domElement.remove();
+    bulletsArray.splice(bulletsArray.indexOf(bulletInstance), 1);
+  }
+}
 
 // detecting bullets & rats collision
 
-function detectBulletCollision(
-  bulletInstance,
-  ratInstance,
-  bulletIndex,
-  ratIndex
-) {
+function detectBulletCollision(bulletInstance, ratInstance, bulletIndex, ratIndex) {
   if (
-    ratInstance.positionX * 1.2 <
-      bulletInstance.positionX + bulletInstance.width &&
-    ratInstance.positionX * 1.2 + ratInstance.width >
-      bulletInstance.positionX &&
+    ratInstance.positionX * 1.2 < bulletInstance.positionX + bulletInstance.width &&
+    ratInstance.positionX * 1.2 + ratInstance.width > bulletInstance.positionX &&
     ratInstance.positionY < bulletInstance.positionY + bulletInstance.height &&
     ratInstance.height + ratInstance.positionY > bulletInstance.positionY
   ) {
     bulletInstance.domElement.remove();
     bulletsArray.splice(bulletIndex, 1);
+    ratInstance.domElement.remove();
     ratsArray.splice(ratIndex, 1);
     ratInstance.domElement.remove();
     lives++;
@@ -239,4 +262,4 @@ function printScore() {
 function toggleMuted() {
   let sound = document.getElementById("sound");
   sound.muted = !sound.muted;
-  }
+}

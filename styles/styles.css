@@ -160,7 +160,7 @@ body {
   display: flex;
   justify-content: flex-start;
   opacity: 0.2;
-  margin-top: 5px; 
+  margin-top: 5px;
 }
 
 .soundControl:hover {
@@ -243,4 +243,14 @@ input:checked + .slider:before {
   width: auto;
   height: 32px;
   margin-left: 137px;
+}
+
+#level-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: white;
+  text-shadow: 2px 2px #000000;
 }
